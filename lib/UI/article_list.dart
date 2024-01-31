@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:td_flutter/Models/Article.dart';
 import 'package:td_flutter/Controllers/ArticleController.dart';
 import 'package:td_flutter/Models/Cart.dart';
+import 'package:td_flutter/UI/ArticleDetails.dart';
 
 class ArticleList extends StatefulWidget {
   final Cart _cart;
@@ -87,7 +88,7 @@ class _ArticleListState extends State<ArticleList> {
                   ],
                 ),
                 onPressed: (){
-                  print('Voir détails');
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> ArticleDetails(article: article, cart: widget._cart)));
                 },
               )
             ],
