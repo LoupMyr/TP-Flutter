@@ -28,4 +28,7 @@ class AppStyle {
     color: Colors.indigo,
     fontSize: 22.0,
   );
+
+  static final Color goldColor = Color.fromRGBO(212, 175, 55, 1);
+
 }

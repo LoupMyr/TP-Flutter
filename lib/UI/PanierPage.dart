@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:td_flutter/Layout/AppBarLayout.dart';
 import 'package:td_flutter/Layout/AppStyle.dart';
 import 'package:td_flutter/Models/Cart.dart';
+import 'package:td_flutter/UI/HomePage.dart';
 
 class PanierPage extends StatefulWidget {
   final Cart _cart;
@@ -55,24 +56,46 @@ class _PanierPageState extends State<PanierPage> {
     });
   }
 
+  void buyPanier() {
+    widget._cart.clearCart();
+    Navigator.pop(context);
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text("Merci pour votre achat !"),
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarLayout.buildAppBar(widget.title, context, widget._cart),
       body: Center(
-        child: widget._cart.items.isNotEmpty
-            ? ListView.builder(
-                itemCount: widget._cart.items.length,
-                itemBuilder: (context, index) =>
-                    _buildRow(widget._cart.items[index]),
-                itemExtent: 180,
-              )
-            : Column(
-                children: [
-                  Text("Votre panier est vide !",
-                      style: AppStyle.pageTitleTextStyle)
-                ],
-              ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            widget._cart.items.isNotEmpty
+                ? ListView.builder(
+                    itemCount: widget._cart.items.length,
+                    itemBuilder: (context, index) =>
+                        _buildRow(widget._cart.items[index]),
+                    itemExtent: 180,
+                  )
+                : Column(
+                    children: [
+                      Text("Votre panier est vide !",
+                          style: AppStyle.pageTitleTextStyle)
+                    ],
+                  ),
+            Column(
+              children: [
+                ElevatedButton(
+                  onPressed: () => buyPanier(),
+                  child: const Text("Valider le panier"),
+                ),
+                const Padding(padding: EdgeInsets.symmetric(vertical: 20)),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
