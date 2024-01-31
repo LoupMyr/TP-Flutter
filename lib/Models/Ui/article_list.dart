@@ -52,13 +52,13 @@ class _ArticleListState extends State<ArticleList> {
 
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          ListTile(
-            title: Text(article.title,
+           Text(article.title,
             style: TextStyle(fontFamily: 'Montserrat', fontSize: 25, color: Color.fromRGBO(212, 175, 55, 1)),),
             //subtitle: Text(article.description),
             //leading: Icon(Icons.local_pizza),
-          ),
+
           Image.network(
             '${article.image}',
             height: 550,
@@ -69,34 +69,35 @@ class _ArticleListState extends State<ArticleList> {
             padding: const EdgeInsets.all(4.0),
             child: Text(article.description),
           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.red.shade800)
+                ),
+                child: Row(
+                  children: [
+                    Icon(Icons.shopping_cart),
+                    SizedBox(width: 5),
+                    Text("Details"),
+                  ],
+                ),
+                onPressed: (){
+                  print('Voir détails');
+                },
+              )
+            ],
+          ),
         ],
       ),
     );
 
   }
 
-  _buildPizzaDetails(Article article){
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ListTile(
-          title: Text(article.title),
-          //subtitle: Text(article.description),
-          //leading: Icon(Icons.local_pizza),
-        ),
-        Image.network(
-          '${article.image}',
-          height: 120,
-          width: MediaQuery.of(context).size.width,
-          fit: BoxFit.fitWidth,
-        ),
-        Container(
-          padding: const EdgeInsets.all(4.0),
-          child: Text(article.description),
-        ),
-      ],
-    );
-  }
+
+
 
 
 
