@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD:lib/HomePage.dart
 import 'Models/menu.dart';
 
+=======
+import 'package:td_flutter/Controllers/ArticleController.dart';
+import 'package:td_flutter/Layout/AppBarLayout.dart';
+import 'package:td_flutter/Models/Article.dart';
+import 'package:td_flutter/Models/Cart.dart';
+>>>>>>> 46d95a99c3c787ce0b014d2ae5be69f1aca26c01:lib/UI/HomePage.dart
 
 class HomePage extends StatefulWidget {
   final String title;
@@ -12,6 +19,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final Cart _cart = Cart();
 
   var _menus = [
     Menu(1, 'Collections 2024', 'art.jpg', Color.fromRGBO(212, 175, 55, 1), ),
@@ -21,6 +29,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+<<<<<<< HEAD:lib/HomePage.dart
       appBar: AppBar(
         title: Text(widget.title),
       ),
@@ -35,6 +44,14 @@ class _HomePageState extends State<HomePage> {
             child: _buildRow(_menus[index]),
           ),
           itemExtent:180,
+=======
+      appBar: AppBarLayout.buildAppBar(widget.title, context, _cart),
+      body: const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+          ],
+>>>>>>> 46d95a99c3c787ce0b014d2ae5be69f1aca26c01:lib/UI/HomePage.dart
         ),
       ),)
 
