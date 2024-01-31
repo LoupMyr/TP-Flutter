@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:td_flutter/Controllers/ArticleController.dart';
+import 'package:td_flutter/Models/Article.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.title});
@@ -11,8 +13,16 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
+  void getArticles() async {
+    List<Article> articles = await ArticleController.getArticles();
+    for(Article elt in articles){
+      print(elt.title);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    getArticles();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
