@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       title: 'E-commerce',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Color.fromRGBO(212, 175, 55, 1)),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromRGBO(212, 175, 55, 1)),
         useMaterial3: true,
       ),
       home: const HomePage(title: 'Art By Chiara'),

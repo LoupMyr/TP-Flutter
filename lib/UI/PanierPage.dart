@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:td_flutter/Layout/AppBarLayout.dart';
+import 'package:td_flutter/Layout/AppStyle.dart';
 import 'package:td_flutter/Models/Cart.dart';
 
 class PanierPage extends StatefulWidget {
@@ -31,8 +32,7 @@ class _PanierPageState extends State<PanierPage> {
             ),
             Text(
               "Prix: ${item.article.price}€",
-              style: const TextStyle(
-                  fontSize: 13, color: Colors.grey),
+              style: const TextStyle(fontSize: 13, color: Colors.grey),
             ),
           ],
         ),
@@ -60,12 +60,19 @@ class _PanierPageState extends State<PanierPage> {
     return Scaffold(
       appBar: AppBarLayout.buildAppBar(widget.title, context, widget._cart),
       body: Center(
-        child: ListView.builder(
-          itemCount: widget._cart.items.length,
-          itemBuilder: (context, index) =>
-              _buildRow(widget._cart.items[index]),
-          itemExtent: 180,
-        ),
+        child: widget._cart.items.isNotEmpty
+            ? ListView.builder(
+                itemCount: widget._cart.items.length,
+                itemBuilder: (context, index) =>
+                    _buildRow(widget._cart.items[index]),
+                itemExtent: 180,
+              )
+            : Column(
+                children: [
+                  Text("Votre panier est vide !",
+                      style: AppStyle.pageTitleTextStyle)
+                ],
+              ),
       ),
     );
   }
