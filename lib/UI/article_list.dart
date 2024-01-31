@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:td_flutter/Models/Article.dart';
 import 'package:td_flutter/Controllers/ArticleController.dart';
+import 'package:td_flutter/Models/Cart.dart';
 
 class ArticleList extends StatefulWidget {
-  const ArticleList({super.key});
+  final Cart _cart;
+  const ArticleList(this._cart, {super.key});
 
   @override
   State<ArticleList> createState() => _ArticleListState();

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:td_flutter/Layout/AppBarLayout.dart';
 import 'package:td_flutter/Layout/AppStyle.dart';
 import 'package:td_flutter/Models/Cart.dart';
-import 'package:td_flutter/UI/HomePage.dart';
 
 class PanierPage extends StatefulWidget {
   final Cart _cart;
