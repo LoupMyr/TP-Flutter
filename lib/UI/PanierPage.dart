@@ -64,38 +64,48 @@ class _PanierPageState extends State<PanierPage> {
     ));
   }
 
+  double totalCart() {
+    double sum = 0;
+    for (CartItem item in widget._cart.items) {
+      sum += item.article.price;
+    }
+    return sum;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarLayout.buildAppBar(widget.title, context, widget._cart),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            widget._cart.items.isNotEmpty
-                ? ListView.builder(
+        child: widget._cart.items.isNotEmpty
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ListView.builder(
                     itemCount: widget._cart.items.length,
                     itemBuilder: (context, index) =>
                         _buildRow(widget._cart.items[index]),
                     itemExtent: 180,
-                  )
-                : Column(
-                    children: [
-                      Text("Votre panier est vide !",
-                          style: AppStyle.pageTitleTextStyle)
-                    ],
                   ),
-            Column(
-              children: [
-                ElevatedButton(
-                  onPressed: () => buyPanier(),
-                  child: const Text("Valider le panier"),
-                ),
-                const Padding(padding: EdgeInsets.symmetric(vertical: 20)),
-              ],
-            )
-          ],
-        ),
+                  Column(
+                    children: [
+                      Text("Sous-total: {$totalCart()}€"),
+                      ElevatedButton(
+                        onPressed: () => buyPanier(),
+                        child: const Text("Valider le panier"),
+                      ),
+                      const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 20)),
+                    ],
+                  )
+                ],
+              )
+            : Column(
+                children: [
+                  Text("Votre panier est vide !",
+                      style: AppStyle.pageTitleTextStyle)
+                ],
+              ),
       ),
     );
   }
