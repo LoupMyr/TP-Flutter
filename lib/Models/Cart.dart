@@ -31,6 +31,10 @@ class Cart {
     }
   }
 
+  void clearCart(){
+    this._items.clear();
+  }
+
   int totalItems() {
     return _items.length;
   }

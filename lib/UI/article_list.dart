@@ -1,23 +1,26 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:td_flutter/Layout/AppBarLayout.dart';
 import 'package:td_flutter/Models/Article.dart';
 import 'package:td_flutter/Controllers/ArticleController.dart';
 import 'package:td_flutter/Models/Cart.dart';
+import 'package:td_flutter/UI/ArticleDetails.dart';
 
 class ArticleList extends StatefulWidget {
   final Cart _cart;
-  const ArticleList(this._cart,{super.key});
+
+  const ArticleList(this._cart, {super.key});
 
   @override
-  State<ArticleList> createState() => _ArticleListState();
+  _ArticleListState createState() => _ArticleListState();
 }
 
 class _ArticleListState extends State<ArticleList> {
-
   List<Article> _articles = [];
 
-  Future<List<Article>> getArticles() async{
+  Future<List<Article>> getArticles() async {
     _articles = await ArticleController.getArticles();
     return _articles;
   }
@@ -42,8 +45,10 @@ class _ArticleListState extends State<ArticleList> {
                 return _buildRow(snapshot.data![index]);
               },
             );
-          }else{
-            return Column(children: [],);
+          } else {
+            return Column(
+              children: [],
+            );
           }
         },
       ),
@@ -52,32 +57,28 @@ class _ArticleListState extends State<ArticleList> {
 
   _buildRow(Article article) {
     return Card(
-
       color: Colors.black,
       elevation: 1.0,
       shape: RoundedRectangleBorder(
         side: BorderSide(color: Colors.white, width: 2.0),
         borderRadius: BorderRadius.circular(8.0),
       ),
-
-
       child: Column(
-
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-
-           Text(article.title,
-            style: const TextStyle(
+          Text(
+            utf8.decode(article.title.codeUnits),
+            style: TextStyle(
                 fontFamily: 'Montserrat',
                 fontSize: 25,
-                color: Color.fromRGBO(212, 175, 55, 1)
-            ),
-           ),
-
+                color: Color.fromRGBO(212, 175, 55, 1)),
+          ),
+          //subtitle: Text(article.description),
+          //leading: Icon(Icons.local_pizza),
 
           Image.network(
-            article.image,
+            '${article.image}',
             height: 550,
             width: 300,
             fit: BoxFit.cover,
@@ -86,48 +87,46 @@ class _ArticleListState extends State<ArticleList> {
             padding: const EdgeInsets.all(16.0),
             child: Center(
               child: Text(
-                article.description,
+                utf8.decode(article.description.codeUnits),
                 style: const TextStyle(color: Colors.white, fontSize: 15),
               ),
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(bottom: 16.0),
-            child:
-            Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ArticleDetails(article: article, cart: widget._cart,),
+                    ),
+                  ),
                   style: ButtonStyle(
                       backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.white)
-                  ),
+                          MaterialStateProperty.all<Color>(Colors.white)),
                   child: const Row(
                     children: [
                       Icon(Icons.shopping_cart),
                       SizedBox(width: 5),
-                      Text("Details",
+                      Text(
+                        "Details",
                         style: TextStyle(
                             fontFamily: 'Roboto',
                             fontSize: 25,
-                            color: Color.fromRGBO(212, 175, 55, 1)
-                        ),
+                            color: Color.fromRGBO(212, 175, 55, 1)),
                       ),
                     ],
                   ),
-                  onPressed: (){
-                    print('Voir détails');
-                  },
+
                 )
               ],
             ),
-          )
-
+          ),
         ],
       ),
     );
-
   }
-
-
 }
