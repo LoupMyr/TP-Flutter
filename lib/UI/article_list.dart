@@ -67,13 +67,17 @@ class _ArticleListState extends State<ArticleList> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            utf8.decode(article.title.codeUnits),
-            style: TextStyle(
-                fontFamily: 'Montserrat',
-                fontSize: 25,
-                color: Color.fromRGBO(212, 175, 55, 1)),
+          Padding(
+            padding: const EdgeInsets.all( 16.0),
+            child: Text(
+              utf8.decode(article.title.codeUnits),
+              style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontSize: 25,
+                  color: Color.fromRGBO(212, 175, 55, 1)),
+            ),
           ),
+
           //subtitle: Text(article.description),
           //leading: Icon(Icons.local_pizza),
 
@@ -109,7 +113,6 @@ class _ArticleListState extends State<ArticleList> {
                           MaterialStateProperty.all<Color>(Colors.white)),
                   child: const Row(
                     children: [
-                      Icon(Icons.shopping_cart),
                       SizedBox(width: 5),
                       Text(
                         "Details",
