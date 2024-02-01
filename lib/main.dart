@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:td_flutter/Models/menu.dart';
 
-import 'Models/Ui/article_list.dart';
+import 'UI/article_list.dart';
 
 void main() {
   runApp(const MyApp());
