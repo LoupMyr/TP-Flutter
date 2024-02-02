@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:td_flutter/Layout/AppBarLayout.dart';
 import 'package:td_flutter/Layout/AppStyle.dart';
@@ -27,7 +29,7 @@ class _PanierPageState extends State<PanierPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              item.article.title,
+              utf8.decode(item.article.title.codeUnits),
               style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
             ),
             Text(
@@ -79,33 +81,35 @@ class _PanierPageState extends State<PanierPage> {
         decoration: const BoxDecoration(color: Colors.black),
         child: Center(
           child: widget._cart.items.isNotEmpty
-              ? Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              ?
+          SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ListView.builder(
+                  itemCount: widget._cart.items.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) =>
+                      _buildRow(widget._cart.items[index]),
+                  itemExtent: 180,
+                ),
+                Column(
                   children: [
-                    ListView.builder(
-                      itemCount: widget._cart.items.length,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) =>
-                          _buildRow(widget._cart.items[index]),
-                      itemExtent: 180,
+                    Text("Sous-total: ${totalCart()}€", style: const TextStyle(color: Colors.white),),
+                    ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                          MaterialStateProperty.all<Color>(AppStyle.goldColor)),
+                      onPressed: () => buyPanier(),
+                      child: const Text("Valider le panier", style: TextStyle(color: Colors.white),),
                     ),
-                    Column(
-                      children: [
-                        Text("Sous-total: ${totalCart()}€", style: const TextStyle(color: Colors.white),),
-                        ElevatedButton(
-                          style: ButtonStyle(
-                              backgroundColor:
-                              MaterialStateProperty.all<Color>(AppStyle.goldColor)),
-                          onPressed: () => buyPanier(),
-                          child: const Text("Valider le panier", style: TextStyle(color: Colors.white),),
-                        ),
-                        const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 20)),
-                      ],
-                    )
+                    const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 20)),
                   ],
                 )
-              : Column(
+              ],
+            ),
+          ) : Column(
                   children: [
                     Text("Votre panier est vide !",
                         style: AppStyle.pageTitleTextStyle.copyWith(color: Colors.white)),

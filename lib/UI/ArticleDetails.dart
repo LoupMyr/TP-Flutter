@@ -8,6 +8,7 @@ import '../Models/Cart.dart';
 class ArticleDetails extends StatefulWidget {
   final Article article;
   final Cart cart;
+
   const ArticleDetails({super.key, required this.article, required this.cart});
 
   @override
@@ -17,7 +18,7 @@ class ArticleDetails extends StatefulWidget {
 class _ArticleDetailsState extends State<ArticleDetails> {
   //Article article = Article(1, "Blood Sweet and Tears", "Une impression personnalisée représentant un mélange saisissant de beauté et de douleur.", "https://i.postimg.cc/X7QWRd2h/20230913-135630.jpg", 25.99, "A4", "Collection printemps 2024");
 
-  void addToCart(){
+  void addToCart() {
     widget.cart.addProduct(widget.article);
     Navigator.pop(context);
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -55,7 +56,48 @@ class _ArticleDetailsState extends State<ArticleDetails> {
                 style: const TextStyle(color: Colors.white),
               ),
             ),
-            ElevatedButton(onPressed: addToCart, child: Text("Commander")),
+            const Center(
+              child: Text(
+                "Fiche technique du produit",
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.orange),
+              ),
+            ),
+            Container(
+
+                padding: const EdgeInsets.all(10),
+                margin: const EdgeInsets.all(30),
+                decoration: const BoxDecoration(color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(10))),
+                child: Column(
+                  children: [
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          const Text("Collection :"),
+                          Text(utf8.decode(widget.article.collection.codeUnits)),
+                        ]),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          const Text("Format :"),
+                          Text(widget.article.size),
+                        ]),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          const Text("Prix :"),
+                          Text("${widget.article.price}€",
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold
+                          ),),
+                        ]),
+                  ],
+                )),
+            ElevatedButton(
+                onPressed: addToCart, child: const Text("Commander")),
           ],
         ),
       ),
