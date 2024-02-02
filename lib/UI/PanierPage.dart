@@ -21,14 +21,14 @@ class _PanierPageState extends State<PanierPage> {
       children: [
         SizedBox(
           width: MediaQuery.sizeOf(context).width * 0.2,
-          child: Image.asset(item.article.image),
+          child: Image.network(item.article.image),
         ),
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               item.article.title,
-              style: const TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
             ),
             Text(
               "Prix: ${item.article.price}€",
@@ -41,7 +41,7 @@ class _PanierPageState extends State<PanierPage> {
             children: [
               IconButton(
                   onPressed: () => decrementQuantity(item),
-                  icon: const Icon(Icons.remove)),
+                  icon: const Icon(Icons.delete, color: Colors.white)),
             ],
           ),
         ),
@@ -75,36 +75,43 @@ class _PanierPageState extends State<PanierPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarLayout.buildAppBar(widget.title, context, widget._cart),
-      body: Center(
-        child: widget._cart.items.isNotEmpty
-            ? Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ListView.builder(
-                    itemCount: widget._cart.items.length,
-                    itemBuilder: (context, index) =>
-                        _buildRow(widget._cart.items[index]),
-                    itemExtent: 180,
-                  ),
-                  Column(
-                    children: [
-                      Text("Sous-total: {$totalCart()}€"),
-                      ElevatedButton(
-                        onPressed: () => buyPanier(),
-                        child: const Text("Valider le panier"),
-                      ),
-                      const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20)),
-                    ],
-                  )
-                ],
-              )
-            : Column(
-                children: [
-                  Text("Votre panier est vide !",
-                      style: AppStyle.pageTitleTextStyle)
-                ],
-              ),
+      body: Container(
+        decoration: const BoxDecoration(color: Colors.black),
+        child: Center(
+          child: widget._cart.items.isNotEmpty
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ListView.builder(
+                      itemCount: widget._cart.items.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) =>
+                          _buildRow(widget._cart.items[index]),
+                      itemExtent: 180,
+                    ),
+                    Column(
+                      children: [
+                        Text("Sous-total: ${totalCart()}€", style: const TextStyle(color: Colors.white),),
+                        ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor:
+                              MaterialStateProperty.all<Color>(AppStyle.goldColor)),
+                          onPressed: () => buyPanier(),
+                          child: const Text("Valider le panier", style: TextStyle(color: Colors.white),),
+                        ),
+                        const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 20)),
+                      ],
+                    )
+                  ],
+                )
+              : Column(
+                  children: [
+                    Text("Votre panier est vide !",
+                        style: AppStyle.pageTitleTextStyle.copyWith(color: Colors.white)),
+                  ],
+                ),
+        ),
       ),
     );
   }

@@ -13,16 +13,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Cart _cart = Cart();
+  final Cart _cart = Cart();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBarLayout.buildAppBar(widget.title, context, _cart),
-        body: Center(
+      appBar: AppBarLayout.buildAppBar(widget.title, context, _cart),
+      body: Container(
+        decoration: BoxDecoration(color: Colors.black),
+        child: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ElevatedButton(
+                style: ButtonStyle(),
                   onPressed: () => Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -32,6 +36,8 @@ class _HomePageState extends State<HomePage> {
                   child: const Text("Voir la collection 2024"))
             ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
